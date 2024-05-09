@@ -1,10 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
 namespace StudentManagementSystem
 {
     public class UserInput
@@ -17,24 +10,26 @@ namespace StudentManagementSystem
             try
             {
             Console.WriteLine("Enter First Name : ");
-            string FirstName = Console.ReadLine();
+                string? FirstName = Console.ReadLine();
             Console.WriteLine("Enter Middle Name : ");
-            string MiddleName = Console.ReadLine();
+                string? MiddleName = Console.ReadLine();
             Console.WriteLine("Enter Last Name : ");
-            string LastName = Console.ReadLine();
+                string? LastName = Console.ReadLine();
             Console.WriteLine("Enter Age : ");
-            int Age = int.Parse(Console.ReadLine());
+                int Age = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Address : ");
-            string Address = Console.ReadLine();
+                string? Address = Console.ReadLine();
             Console.WriteLine("Enter RollNo : ");
-            int RollNo = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter Standard : ");
-                int Standard = int.Parse(Console.ReadLine());
-                if(Standard == 0)
+                int RollNo = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter Class : ");
+                int Standard = Convert.ToInt32(Console.ReadLine());
+                while (Standard == 0 || Standard > 12)
                 {
-                    throw new Exception("Class is mandatory.");
+                    Console.WriteLine("Invalid class");
+                    Console.WriteLine("Enter a Class :");
+                    Standard = Convert.ToInt32(Console.ReadLine());
                 }
-                Dictionary<Subject,int> marks = new Dictionary<Subject, int>();
+                Dictionary<Subject, int> marks = new Dictionary<Subject, int>();
             foreach (Subject subject in Enum.GetValues(typeof(Subject)))
             {
                 int marksValue;
@@ -60,10 +55,10 @@ namespace StudentManagementSystem
                 marks[subject] = marksValue;
             }
             Console.WriteLine("Enter Your hobbies : ");
-            string[] hobbies = new string[7];
+                var hobbies = new string[7];
                 for (int i = 0; i < hobbies.Length; i++)
             {
-                string value = Console.ReadLine();
+                    var value = Console.ReadLine();
                 hobbies[i] = value;
             }
             DateTime AddedDateTime = DateTime.Now;
@@ -85,7 +80,8 @@ namespace StudentManagementSystem
             studentmanagement.AddStudentInfo(student);
             Console.WriteLine("Student Added Successfully!!");
             Console.WriteLine();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
         }
@@ -104,11 +100,11 @@ namespace StudentManagementSystem
         public void GetStudentByAge()
         {
             Console.WriteLine("Enter the minimum age : ");
-            uint minAge = uint.Parse(Console.ReadLine());
+            uint minAge = Convert.ToUInt32(Console.ReadLine());
             Console.WriteLine("Enter the maximum age : ");
-            uint maxAge = uint.Parse(Console.ReadLine());
+            uint maxAge = Convert.ToUInt32(Console.ReadLine());
             List<Student> students = studentmanagement.GetStudentByAgeInfo(minAge, maxAge);
-            if(students.Count == 0)
+            if (students.Count == 0)
             {
                 Console.WriteLine("No data Found within this age!!");
             }
@@ -121,23 +117,26 @@ namespace StudentManagementSystem
         public void GetClassTopper()
         {
             Console.WriteLine("Enter the class : ");
-            int val = int.Parse(Console.ReadLine());
+            int val = Convert.ToInt32(Console.ReadLine());
             Student topper = studentmanagement.GetClassTopperInfo(val);
-            if(topper == null)
+            if (topper != null)
+            {
+                Console.WriteLine($"Name: {topper.FirstName} {topper.MiddleName} {topper.LastName}");
+            }
+            else
             {
                 Console.WriteLine("No students Found!!");
             }
-            Console.WriteLine($"Name: {topper.FirstName} {topper.MiddleName} {topper.LastName}");
         }
 
         public void GetNthTopper()
         {
             Console.WriteLine("Enter the class : ");
-            int standard = int.Parse(Console.ReadLine());
+            int standard = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Rank : ");
-            int rank = int.Parse(Console.ReadLine());
+            int rank = Convert.ToInt32(Console.ReadLine());
             Student NthTopper = studentmanagement.GetNthTopperInfo(standard, rank);
-            if(NthTopper == null)
+            if (NthTopper == null)
             {
                 Console.WriteLine("Write a valid Rank to find the student : ");
             }
@@ -147,9 +146,9 @@ namespace StudentManagementSystem
         public void FilterByFirstName()
         {
             Console.WriteLine("Enter the First name : ");
-            string name = Console.ReadLine();
+            string? name = Console.ReadLine();
             List<Student> students = studentmanagement.GetStudentsByFirstName(name);
-            if(students.Count == 0)
+            if (students.Count == 0)
             {
                 Console.WriteLine($"No student found with FirstName {name}");
             }
@@ -162,7 +161,7 @@ namespace StudentManagementSystem
         public void FilterByLastName()
         {
             Console.WriteLine("Enter the Last name : ");
-            string name = Console.ReadLine();
+            string? name = Console.ReadLine();
             List<Student> students = studentmanagement.GetStudentsByLastName(name);
             if (students.Count == 0)
             {
@@ -176,7 +175,7 @@ namespace StudentManagementSystem
         public void FilterByMiddleName()
         {
             Console.WriteLine("Enter the Middle name : ");
-            string name = Console.ReadLine();
+            string? name = Console.ReadLine();
             List<Student> students = studentmanagement.GetStudentsByMiddleName(name);
             if (students.Count == 0)
             {
@@ -191,7 +190,7 @@ namespace StudentManagementSystem
         public void FilterStudentByStandard()
         {
             Console.WriteLine("Enter the class : ");
-            int standard = int.Parse(Console.ReadLine());
+            int standard = Convert.ToInt32(Console.ReadLine());
             List<Student> students = studentmanagement.GetStudentsByStandard(standard);
             if (students.Count == 0)
             {
@@ -206,7 +205,7 @@ namespace StudentManagementSystem
         public void FilterStudentByAddress()
         {
             Console.WriteLine("Enter the location : ");
-            string address = Console.ReadLine();
+            string? address = Console.ReadLine();
             List<Student> students = studentmanagement.GetStudentsByAddress(address);
             if (students.Count == 0)
             {
@@ -221,7 +220,7 @@ namespace StudentManagementSystem
         public void FilterStudentByHobby()
         {
             Console.WriteLine("Enter Hobby : ");
-            string hobby = Console.ReadLine();
+            string? hobby = Console.ReadLine();
             List<Student> students = studentmanagement.GetStudentsByHobby(hobby);
             if (students.Count == 0)
             {
@@ -236,7 +235,7 @@ namespace StudentManagementSystem
         public void FilterStudentByDateTime()
         {
             Console.WriteLine("Enter date(yyyy-mm-dd) : ");
-            string dateTime = Console.ReadLine();
+            string? dateTime = Console.ReadLine();
             List<Student> students = studentmanagement.GetStudentsByAddedDateTime(dateTime);
             if (students.Count == 0)
             {
