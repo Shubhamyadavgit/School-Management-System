@@ -19,27 +19,6 @@ namespace StudentManagementSystem
         public string Address {  get; set; }
         public string[] Hobby { get; set; }
         public DateTime AddedDateTime { get; set; }
-        //public Student()
-        //{
-        //    // Initialize Marks as an empty array of integers
-        //    Marks = new int[0];
-        //}
-
-        //public Student(string firstname, string middlename, string lastname, int age, int rollno, string standard, Dictionary<Subject,int> marks, string address, string[] hobby)
-        //{
-        //    FirstName = firstname;
-        //    MiddleName = middlename;
-        //    LastName = lastname;
-        //    Age = age;
-        //    RollNo = rollno;
-        //    Standard = standard;
-        //    Marks = marks;
-        //    Address = address;
-        //    Hobby = hobby;
-        //    AddedDateTime = DateTime.Now;
-        //}
-        //Helper Method for TotalMarks
-
         public int CompareTo(Student? other)
         {
            if(other == null) return 1;

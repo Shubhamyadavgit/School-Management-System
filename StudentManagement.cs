@@ -10,8 +10,6 @@ namespace StudentManagementSystem
     {
         //Creating a list to store students//
         List<Student> students = new List<Student>();
-        Student student;
-
         //1. Method to add student in the list
         public void AddStudentInfo(Student student)
         {
@@ -20,17 +18,21 @@ namespace StudentManagementSystem
 
         //2. Method to Fetch all the student from the records
         public List<Student> GetAllStudentsInfo() {
+            if(students.Count == 0)
+            {
+                Console.WriteLine("No data Found!!");
+            }
             return students;
         }
 
         //3. Method to get student between an age range
-        public List<Student> GetStudentByAgeInfo(int minAge , int maxAge) 
+        public List<Student> GetStudentByAgeInfo(uint minAge , uint maxAge) 
         {
             return students.FindAll(student => student.Age >= minAge && student.Age <= maxAge);
         }
 
         //4. Method to find the topper of the class
-        public Student GetClassTopperInfo(string standard)
+        public Student GetClassTopperInfo(int standard)
         {
             List<Student> StudentInClass = students.FindAll(student => student.Standard == standard);
             if(StudentInClass.Count == 0)
@@ -53,7 +55,7 @@ namespace StudentManagementSystem
         }
 
         //5. Method to get the Nth topper of the class 
-        public Student GetNthTopperInfo(string standard,int Rank)
+        public Student GetNthTopperInfo(int standard,int Rank)
         {
             List<Student> StudentInClass = students.FindAll(student => student.Standard == standard);
             if (StudentInClass.Count == 0)
@@ -78,10 +80,11 @@ namespace StudentManagementSystem
             Predicate<Student> FilterStudent = student =>
             {
 
-                bool name = string.IsNullOrEmpty(firstname)|| student.FirstName.Contains(firstname, StringComparison.OrdinalIgnoreCase);
+                bool name = string.IsNullOrEmpty(firstname) || student.FirstName.Contains(firstname, StringComparison.OrdinalIgnoreCase);
                 return name;
             }; 
             return students.FindAll(FilterStudent);
+            // return students.FindAll(students => students.FirstName == firstname);
         }
         
         public List<Student> GetStudentsByLastName(string lastName)
@@ -92,6 +95,7 @@ namespace StudentManagementSystem
                 return lastn;
             };
             return students.FindAll(FilterStudent);
+            // return students.FindAll(students => students.LastName == lastname);
         }
        
         public List<Student> GetStudentsByMiddleName(string middlename)
@@ -102,15 +106,17 @@ namespace StudentManagementSystem
                 return middlen;
             };
             return students.FindAll(FilterStudent);
+            // return students.FindAll(students => students.MiddleName == middlename);
         }
-        public List<Student> GetStudentsByStandard(string Input)
+        public List<Student> GetStudentsByStandard(int Input)
         {
             Predicate<Student> FilterStudent = student =>
             {
-                bool standard = string.IsNullOrEmpty(Input) || student.Standard.Contains(Input, StringComparison.OrdinalIgnoreCase);
+                bool standard = Input== 0 || student.Standard==Input;
                 return standard;
             };
             return students.FindAll(FilterStudent);
+            // return students.FindAll(students => students.Standard == Input);
         }
 
         public List<Student> GetStudentsByAddress(string loc)
@@ -121,6 +127,7 @@ namespace StudentManagementSystem
                 return FindLoc;
             };
             return students.FindAll(FilterDelegate);
+            // return students.FindAll(students => students.Address == loc);
         }
 
         public List<Student> GetStudentsByHobby(string hobby)
@@ -131,6 +138,7 @@ namespace StudentManagementSystem
                 return FindHobby;
             };
             return students.FindAll(FilterDelegate);
+            // return students.FindAll(students => students.Hobby == hobby);
         }
 
         public List<Student> GetStudentsByAddedDateTime(string dt)
