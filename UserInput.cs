@@ -51,7 +51,6 @@ namespace StudentManagementSystem
                     Console.WriteLine("Address cannot be null write a correct address");
                     Address = Console.ReadLine();
                 }
-
                 Console.WriteLine("Enter RollNo : ");
                 int RollNo;
                 while (!int.TryParse(Console.ReadLine(), out RollNo) || RollNo <= 0)
@@ -59,7 +58,6 @@ namespace StudentManagementSystem
                     Console.WriteLine("Invalid input. RollNo must be a positive integer. Please enter a correct RollNo : ");
                 }
                 Console.WriteLine("Enter Class : ");
-                int Standard;
                 while (!int.TryParse(Console.ReadLine(), out Standard) || Standard < 0 || Standard > 12)
                 {
                     Console.WriteLine("Enter a valid class : ");
@@ -91,11 +89,12 @@ namespace StudentManagementSystem
                 }
 
                 Console.WriteLine("Enter Your hobbies(if want to skip then press enter)  : ");
-                List<string>hobbies = new List<string>();
+                    List<string> hobbies = new List<string>();
                 while (true)
                 {
-                    string hobby = Console.ReadLine();
-                    if(hobbies.Contains(hobby) ) {
+                        string? hobby = Console.ReadLine();
+                        if (hobbies.Contains(hobby))
+                        {
                         Console.WriteLine("Same hobby cannot be inserted write another hobby : ");
                         hobby = Console.ReadLine();
                     }
@@ -119,7 +118,6 @@ namespace StudentManagementSystem
                     Standard = Standard,
                     RollNo = RollNo,
                 };
-
             studentmanagement.AddStudentInfo(student);
             Console.WriteLine("Student Added Successfully!!");
             Console.WriteLine();
