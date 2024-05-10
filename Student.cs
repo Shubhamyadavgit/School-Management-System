@@ -8,16 +8,16 @@ namespace StudentManagementSystem
 {
     public class Student : IComparable<Student>
     {
-        public string FirstName { get; set; }
-        public string MiddleName {  get; set; }
-        public string LastName {  get; set; }
+        public string? FirstName { get; set; }
+        public string? MiddleName {  get; set; }
+        public string? LastName {  get; set; }
         public int Age { get; set; }
         public int RollNo { get; set; }
         public int Standard {  get; set; }
         public Subject Subjects { get; set; }
-        public Dictionary<Subject,int> Marks { get; set; }
-        public string Address {  get; set; }
-        public string?[] Hobby { get; set; }
+        public Dictionary<Subject,int>? Marks { get; set; }
+        public string? Address {  get; set; }
+        public string[]? Hobby { get; set; }
         public DateTime AddedDateTime { get; set; }
         public int CompareTo(Student? other)
         {
@@ -30,7 +30,7 @@ namespace StudentManagementSystem
         public static int TotalMarks(this Student student)
         {
             int TotalMarks = 0;
-            foreach (int mark in student.Marks.Values)
+            foreach (var mark in student.Marks.Values)
             {
                 TotalMarks += mark;
             }

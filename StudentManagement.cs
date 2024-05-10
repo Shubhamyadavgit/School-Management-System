@@ -120,7 +120,7 @@ namespace StudentManagementSystem
             // return students.FindAll(students => students.Standard == Input);
         }
 
-        public List<Student> GetStudentsByAddress(string loc)
+        public List<Student> GetStudentsByAddress(string? loc)
         {
             Predicate<Student> FilterDelegate = student =>
             {

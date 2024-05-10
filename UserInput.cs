@@ -1,26 +1,26 @@
-<<<<<<< HEAD
-﻿namespace StudentManagementSystem
-=======
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+
 namespace StudentManagementSystem
->>>>>>> 52f6ddb7b8257c876b0b62cf8840979c637fc1d9
 {
     public class UserInput
     {
-        StudentManagement studentmanagement = new();
-        
+        private StudentManagement studentmanagement = new();
 
         public void AddStudent()
         {
             try
             {
-<<<<<<< HEAD
                 Console.WriteLine("Enter First Name : ");
                 string? FirstName = Console.ReadLine();
-                while ((string.IsNullOrEmpty(FirstName) || FirstName.Any(Char.IsDigit)))
+                while (string.IsNullOrEmpty(FirstName) || FirstName.Any(char.IsDigit))
                 {
                     Console.WriteLine("Enter a correct First Name : ");
                     FirstName = Console.ReadLine();
                 }
+
                 Console.WriteLine("Enter Middle Name : ");
                 string? MiddleName = Console.ReadLine();
                 while (MiddleName.Any(char.IsDigit))
@@ -28,69 +28,51 @@ namespace StudentManagementSystem
                     Console.WriteLine("Enter a correct middle Name : ");
                     MiddleName = Console.ReadLine();
                 }
+
                 Console.WriteLine("Enter Last Name : ");
                 string? LastName = Console.ReadLine();
-                while ((string.IsNullOrEmpty(LastName) || LastName.Any(Char.IsDigit)))
+                while (string.IsNullOrEmpty(LastName) || LastName.Any(char.IsDigit))
                 {
-                    Console.WriteLine("Enter a correct  last Name : ");
+                    Console.WriteLine("Enter a correct last Name : ");
                     LastName = Console.ReadLine();
                 }
+
                 Console.WriteLine("Enter Age : ");
-                int Age = Convert.ToInt32(Console.ReadLine());
-                while(Age >= 0) {
+                int Age;
+                while (!int.TryParse(Console.ReadLine(), out Age) || Age < 0)
+                {
                     Console.WriteLine("Enter a correct age : ");
-                    Age = Convert.ToInt32(Console.ReadLine());
                 }
+
                 Console.WriteLine("Enter Address : ");
                 string? Address = Console.ReadLine();
-                while ((string.IsNullOrEmpty(Address))){
+                while (string.IsNullOrEmpty(Address))
+                {
                     Console.WriteLine("Address cannot be null write a correct address");
                     Address = Console.ReadLine();
                 }
+
                 Console.WriteLine("Enter RollNo : ");
                 int RollNo = Convert.ToInt32(Console.ReadLine());
                 if (RollNo <= 0)
                 {
                     throw new Exception("Student must have a roll no.");
                 }
+
                 Console.WriteLine("Enter Standard : ");
                 int Standard = Convert.ToInt32(Console.ReadLine());
-                if(Standard == 0)
-=======
-            Console.WriteLine("Enter First Name : ");
-                string? FirstName = Console.ReadLine();
-            Console.WriteLine("Enter Middle Name : ");
-                string? MiddleName = Console.ReadLine();
-            Console.WriteLine("Enter Last Name : ");
-                string? LastName = Console.ReadLine();
-            Console.WriteLine("Enter Age : ");
-                int Age = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter Address : ");
-                string? Address = Console.ReadLine();
-            Console.WriteLine("Enter RollNo : ");
-                int RollNo = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter Class : ");
-                int Standard = Convert.ToInt32(Console.ReadLine());
                 while (Standard == 0 || Standard > 12)
->>>>>>> 52f6ddb7b8257c876b0b62cf8840979c637fc1d9
                 {
                     Console.WriteLine("Invalid class");
                     Console.WriteLine("Enter a Class :");
                     Standard = Convert.ToInt32(Console.ReadLine());
                 }
-<<<<<<< HEAD
-                Dictionary<Subject,int> marks = new Dictionary<Subject, int>();
-                foreach (Subject subject in Enum.GetValues(typeof(Subject)))
-=======
-                Dictionary<Subject, int> marks = new Dictionary<Subject, int>();
+
+                var marks = new Dictionary<Subject, int>();
             foreach (Subject subject in Enum.GetValues(typeof(Subject)))
             {
                 int marksValue;
                 while (true)
->>>>>>> 52f6ddb7b8257c876b0b62cf8840979c637fc1d9
-                {
-                    int marksValue;
-                    while (true)
                     {
                         Console.WriteLine($"Enter the marks in {subject} : ");
                         if (int.TryParse(Console.ReadLine(), out marksValue))
@@ -109,16 +91,16 @@ namespace StudentManagementSystem
                             Console.WriteLine("Invalid input. Please enter a valid integer value.");
                         }
                     }
-<<<<<<< HEAD
                     marks[subject] = marksValue;
                 }
+
                 Console.WriteLine("Enter Your hobbies : ");
                 string?[] hobbies = new string[7];
                 for (int i = 0; i < hobbies.Length; i++)
                 {
-                    string? value = Console.ReadLine();
-                    hobbies[i] = value;
+                    hobbies[i] = Console.ReadLine();
                 }
+
                 DateTime AddedDateTime = DateTime.Now;
                 var student = new Student()
                 {
@@ -133,44 +115,12 @@ namespace StudentManagementSystem
                     Standard = Standard,
                     RollNo = RollNo,
                 };
-                //Hobby = hobbies;
-                // student.Marks = marks.Select(pair=>pair.Value).ToArray();
-                studentmanagement.AddStudentInfo(student);
-                Console.WriteLine("Student Added Successfully!!");
-                Console.WriteLine();
-            }catch (Exception ex)
-=======
-                marks[subject] = marksValue;
-            }
-            Console.WriteLine("Enter Your hobbies : ");
-                var hobbies = new string[7];
-                for (int i = 0; i < hobbies.Length; i++)
-            {
-                    var value = Console.ReadLine();
-                hobbies[i] = value;
-            }
-            DateTime AddedDateTime = DateTime.Now;
-                var student = new Student()
-                {
-                FirstName = FirstName,
-                LastName = LastName,
-                MiddleName = MiddleName,
-                Age = Age,
-                Address = Address,
-                Marks = marks,
-                Hobby = hobbies,
-                AddedDateTime = AddedDateTime,
-                Standard = Standard,
-                RollNo = RollNo,
-            };
-            //Hobby = hobbies;
-           // student.Marks = marks.Select(pair=>pair.Value).ToArray();
+
             studentmanagement.AddStudentInfo(student);
             Console.WriteLine("Student Added Successfully!!");
             Console.WriteLine();
             }
             catch (Exception ex)
->>>>>>> 52f6ddb7b8257c876b0b62cf8840979c637fc1d9
             {
                 Console.WriteLine(ex.Message);
             }
@@ -208,7 +158,7 @@ namespace StudentManagementSystem
             Console.WriteLine("Enter the class : ");
             int val = Convert.ToInt32(Console.ReadLine());
             Student topper = studentmanagement.GetClassTopperInfo(val);
-<<<<<<< HEAD
+
             if (topper == null)
             {
                 Console.WriteLine("No students Found!!");
@@ -217,17 +167,8 @@ namespace StudentManagementSystem
             {
                 Console.WriteLine($"Name: {topper.FirstName} {topper.MiddleName} {topper.LastName}");
             }
-=======
-            if (topper != null)
-            {
-                Console.WriteLine($"Name: {topper.FirstName} {topper.MiddleName} {topper.LastName}");
-            }
-            else
-            {
-                Console.WriteLine("No students Found!!");
-            }
->>>>>>> 52f6ddb7b8257c876b0b62cf8840979c637fc1d9
         }
+
         public void GetNthTopper()
         {
             Console.WriteLine("Enter the class : ");
