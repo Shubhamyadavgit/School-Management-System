@@ -91,12 +91,20 @@ namespace StudentManagementSystem
                 }
 
                 Console.WriteLine("Enter Your hobbies(if want to skip then press enter)  : ");
-                string?[] hobbies = new string[7];
-                for (int i = 0; i < hobbies.Length; i++)
+                List<string>hobbies = new List<string>();
+                while (true)
                 {
-                    hobbies[i] = Console.ReadLine();
+                    string hobby = Console.ReadLine();
+                    if(hobbies.Contains(hobby) ) {
+                        Console.WriteLine("Same hobby cannot be inserted write another hobby : ");
+                        hobby = Console.ReadLine();
+                    }
+                    if (string.IsNullOrEmpty(hobby) || string.IsNullOrWhiteSpace(hobby))
+                {
+                        break;
+                    }
+                    hobbies.Add(hobby);
                 }
-
                 DateTime AddedDateTime = DateTime.Now;
                 var student = new Student()
                 {
