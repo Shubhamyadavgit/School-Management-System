@@ -53,12 +53,11 @@ namespace StudentManagementSystem
                 }
 
                 Console.WriteLine("Enter RollNo : ");
-                int RollNo = Convert.ToInt32(Console.ReadLine());
-                if (RollNo <= 0)
+                int RollNo;
+                while (!int.TryParse(Console.ReadLine(), out RollNo) || RollNo <= 0)
                 {
-                    throw new Exception("Student must have a roll no.");
+                    Console.WriteLine("Invalid input. RollNo must be a positive integer. Please enter a correct RollNo : ");
                 }
-
                 Console.WriteLine("Enter Standard : ");
                 int Standard = Convert.ToInt32(Console.ReadLine());
                 while (Standard == 0 || Standard > 12)
@@ -94,7 +93,7 @@ namespace StudentManagementSystem
                     marks[subject] = marksValue;
                 }
 
-                Console.WriteLine("Enter Your hobbies : ");
+                Console.WriteLine("Enter Your hobbies(if want to skip then press enter)  : ");
                 string?[] hobbies = new string[7];
                 for (int i = 0; i < hobbies.Length; i++)
                 {
@@ -293,7 +292,7 @@ namespace StudentManagementSystem
         public void DisplayStudentEveryTenSeconds()
         {
             List<Student> students = studentmanagement.GetAllStudentsInfo();
-            foreach(Student student in students)
+            foreach (Student student in students)
             {
                 Console.WriteLine($"Student name : {student.FirstName} {student.MiddleName} {student.LastName} , Class : {student.Standard}");
                 Thread.Sleep(10000);
