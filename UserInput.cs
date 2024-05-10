@@ -58,15 +58,12 @@ namespace StudentManagementSystem
                 {
                     Console.WriteLine("Invalid input. RollNo must be a positive integer. Please enter a correct RollNo : ");
                 }
-                Console.WriteLine("Enter Standard : ");
-                int Standard = Convert.ToInt32(Console.ReadLine());
-                while (Standard == 0 || Standard > 12)
+                Console.WriteLine("Enter Class : ");
+                int Standard;
+                while (!int.TryParse(Console.ReadLine(), out Standard) || Standard < 0 || Standard > 12)
                 {
-                    Console.WriteLine("Invalid class");
-                    Console.WriteLine("Enter a Class :");
-                    Standard = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter a valid class : ");
                 }
-
                 var marks = new Dictionary<Subject, int>();
             foreach (Subject subject in Enum.GetValues(typeof(Subject)))
             {
