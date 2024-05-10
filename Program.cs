@@ -26,63 +26,83 @@ while (true)
     Console.WriteLine("4. Find the student(s) whose age is in between 15 to 25");
     Console.WriteLine("5. Find the details of the student who is topper of the class");
     Console.WriteLine("6. Find the roll no of students who is in the Nth position of topper list");
-    Console.WriteLine("7. Exit Program");
-    int choice = int.Parse(Console.ReadLine());
-
-    switch (choice)
+    Console.WriteLine("7. Find all the classes where the student belongs to every 10 seconds");
+    Console.WriteLine("8. Exit Program");
+    try
     {
-        case 1:
-            ui.AddStudent();
-            break;
-        case 2:
-            ui.GetAllStudents();
-            break;
-        case 3:
-            Console.WriteLine("1. Filter the students by their First name.");
-            Console.WriteLine("2. Filter the students by their Middle name.");
-            Console.WriteLine("3. Filter the students by their Last name.");
-            Console.WriteLine("4. Filter the students by their Class.");
-            Console.WriteLine("5. Filter the students by their Address.");
-            Console.WriteLine("6. Filter the students by their Hobby.");
-            Console.WriteLine("7. Filter the students by their Added date.");
+        int choice = int.Parse(Console.ReadLine());
 
-            int option = int.Parse(Console.ReadLine());
-            switch (option)
-            {
-                case 1:
-                    ui.FilterByFirstName(); break;
+        switch (choice)
+        {
+            case 1:
+                ui.AddStudent();
+                Console.WriteLine();
+                break;
+            case 2:
+                ui.GetAllStudents();
+                Console.WriteLine();
+                break;
+            case 3:
+                Console.WriteLine("1. Filter the students by their First name.");
+                Console.WriteLine("2. Filter the students by their Middle name.");
+                Console.WriteLine("3. Filter the students by their Last name.");
+                Console.WriteLine("4. Filter the students by their Class.");
+                Console.WriteLine("5. Filter the students by their Address.");
+                Console.WriteLine("6. Filter the students by their Hobby.");
+                Console.WriteLine("7. Filter the students by their Added date.");
+
+                int option = int.Parse(Console.ReadLine());
+                switch (option)
+                {
+                    case 1:
+                        ui.FilterByFirstName();
+                        Console.WriteLine();
+                        break;
                     case 2:
-                    ui.FilterByMiddleName(); break;
+                        ui.FilterByMiddleName();
+                        Console.WriteLine();
+                        break;
                     case 3:
-                    ui.FilterByLastName();break;
+                        ui.FilterByLastName(); Console.WriteLine(); break;
                     case 4:
-                    ui.FilterStudentByStandard(); break;
+                        ui.FilterStudentByStandard(); Console.WriteLine(); break;
                     case 5:
-                    ui.FilterStudentByAddress(); break;
+                        ui.FilterStudentByAddress(); Console.WriteLine(); break;
                     case 6:
-                    ui.FilterStudentByHobby(); break;
+                        ui.FilterStudentByHobby(); Console.WriteLine(); break;
                     case 7:
-                    ui.FilterStudentByDateTime(); break;
-                default:
-                    Console.WriteLine("Invalid Input");
-                    break;
-            }
-            break;
-        case 4:
-            ui.GetStudentByAge();
-            break;
-        case 5:
-            ui.GetClassTopper();
-            break;
-        case 6:
-            ui.GetNthTopper();
-            break;
+                        ui.FilterStudentByDateTime(); Console.WriteLine(); break;
+                    default:
+                        Console.WriteLine("Invalid Input");
+                        Console.WriteLine();
+                        break;
+                }
+                break;
+            case 4:
+                ui.GetStudentByAge();
+                Console.WriteLine();
+                break;
+            case 5:
+                ui.GetClassTopper(); Console.WriteLine();
+                break;
+            case 6:
+                ui.GetNthTopper(); Console.WriteLine();
+                break;
             case 7:
-            Console.WriteLine("Exiting Program!!");
-            return;
-        default:
-            Console.WriteLine("Invalid Input!!");
-            break;
+                ui.DisplayStudentEveryTenSeconds();
+                Console.WriteLine();
+                break;
+                case 8:
+                Console.WriteLine("Exiting Program!!");
+                return;
+            default:
+                Console.WriteLine("Invalid Input!!");
+                Console.WriteLine();
+                break;
+        }
+    }catch(Exception ex)
+    {
+        Console.WriteLine(ex.Message);
     }
 }
 

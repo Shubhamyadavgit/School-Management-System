@@ -12,3 +12,4 @@ E:\sv\StudentManagementSystem\obj\Debug\net8.0\refint\StudentManagementSystem.dl
 E:\sv\StudentManagementSystem\obj\Debug\net8.0\StudentManagementSystem.pdb
 E:\sv\StudentManagementSystem\obj\Debug\net8.0\StudentManagementSystem.genruntimeconfig.cache
 E:\sv\StudentManagementSystem\obj\Debug\net8.0\ref\StudentManagementSystem.dll
+E:\sv\StudentManagementSystem\obj\Debug\net8.0\StudentManagementSystem.sourcelink.json

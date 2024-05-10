@@ -13,11 +13,11 @@ namespace StudentManagementSystem
         public string LastName {  get; set; }
         public int Age { get; set; }
         public int RollNo { get; set; }
-        public string Standard {  get; set; }
+        public int Standard {  get; set; }
         public Subject Subjects { get; set; }
         public Dictionary<Subject,int> Marks { get; set; }
         public string Address {  get; set; }
-        public string[] Hobby { get; set; }
+        public string?[] Hobby { get; set; }
         public DateTime AddedDateTime { get; set; }
         public int CompareTo(Student? other)
         {

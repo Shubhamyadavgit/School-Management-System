@@ -37,6 +37,7 @@ namespace StudentManagementSystem
             List<Student> StudentInClass = students.FindAll(student => student.Standard == standard);
             if(StudentInClass.Count == 0)
             {
+                Console.WriteLine("No data Found");
                 return null;
             }
             else
@@ -82,7 +83,7 @@ namespace StudentManagementSystem
 
                 bool name = string.IsNullOrEmpty(firstname) || student.FirstName.Contains(firstname, StringComparison.OrdinalIgnoreCase);
                 return name;
-            }; 
+            };
             return students.FindAll(FilterStudent);
             // return students.FindAll(students => students.FirstName == firstname);
         }
@@ -97,7 +98,7 @@ namespace StudentManagementSystem
             return students.FindAll(FilterStudent);
             // return students.FindAll(students => students.LastName == lastname);
         }
-       
+
         public List<Student> GetStudentsByMiddleName(string middlename)
         {
             Predicate<Student> FilterStudent = student =>
@@ -130,7 +131,7 @@ namespace StudentManagementSystem
             // return students.FindAll(students => students.Address == loc);
         }
 
-        public List<Student> GetStudentsByHobby(string hobby)
+        public List<Student> GetStudentsByHobby(string? hobby)
         {
             Predicate<Student> FilterDelegate = student =>
             {
@@ -141,7 +142,7 @@ namespace StudentManagementSystem
             // return students.FindAll(students => students.Hobby == hobby);
         }
 
-        public List<Student> GetStudentsByAddedDateTime(string dt)
+        public List<Student> GetStudentsByAddedDateTime(string? dt)
         {
             DateTime dateTime = DateTime.Parse(dt);
             Predicate<Student> FilterDelegate = student => student.AddedDateTime >= dateTime;
