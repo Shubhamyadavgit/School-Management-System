@@ -31,7 +31,7 @@ namespace StudentManagementSystem
 
                 Console.WriteLine("Enter Middle Name : ");
                 string? MiddleName = Console.ReadLine();
-                while (MiddleName.Any(char.IsDigit))
+                while (MiddleName.Any(char.IsDigit)|| !regexItem.IsMatch(MiddleName))
                 {
                     Console.WriteLine("Enter a correct middle Name : ");
                     MiddleName = Console.ReadLine();
