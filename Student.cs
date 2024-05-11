@@ -17,7 +17,7 @@ namespace StudentManagementSystem
         public Subject Subjects { get; set; }
         public Dictionary<Subject,int>? Marks { get; set; }
         public string? Address {  get; set; }
-        public string[]? Hobby { get; set; }
+        public HashSet<string>? Hobby { get; set; }
         public DateTime AddedDateTime { get; set; }
         public int CompareTo(Student? other)
         {

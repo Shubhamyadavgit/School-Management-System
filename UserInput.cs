@@ -1,21 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Channels;
 
 namespace StudentManagementSystem
 {
     public class UserInput
     {
         private StudentManagement studentmanagement = new();
+        private bool IsRollNoUniqueForClass(int rollNo, int standard)
+        {
+            List<Student> students = studentmanagement.GetStudentsByStandard(standard);
+            return !students.Any(student => student.RollNo == rollNo);
+        }
 
         public void AddStudent()
         {
-            try
+            var regexItem = new Regex("^[a-zA-Z0-9 ]*$");
+                try
             {
                 Console.WriteLine("Enter First Name : ");
                 string? FirstName = Console.ReadLine();
-                while (string.IsNullOrEmpty(FirstName) || FirstName.Any(char.IsDigit))
+                while (string.IsNullOrEmpty(FirstName) || FirstName.Any(char.IsDigit)|| !regexItem.IsMatch(FirstName))
                 {
                     Console.WriteLine("Enter a correct First Name : ");
                     FirstName = Console.ReadLine();
@@ -31,7 +39,7 @@ namespace StudentManagementSystem
 
                 Console.WriteLine("Enter Last Name : ");
                 string? LastName = Console.ReadLine();
-                while (string.IsNullOrEmpty(LastName) || LastName.Any(char.IsDigit))
+                while (string.IsNullOrEmpty(LastName) || LastName.Any(char.IsDigit) || !regexItem.IsMatch(LastName))
                 {
                     Console.WriteLine("Enter a correct last Name : ");
                     LastName = Console.ReadLine();
@@ -39,14 +47,14 @@ namespace StudentManagementSystem
 
                 Console.WriteLine("Enter Age : ");
                 int Age;
-                while (!int.TryParse(Console.ReadLine(), out Age) || Age < 0)
+                while (!int.TryParse(Console.ReadLine(), out Age) || Age < 0 || Age>100 )
                 {
                     Console.WriteLine("Enter a correct age : ");
                 }
 
                 Console.WriteLine("Enter Address : ");
                 string? Address = Console.ReadLine();
-                while (string.IsNullOrEmpty(Address))
+                while (string.IsNullOrEmpty(Address) || !(regexItem.IsMatch(Address)))
                 {
                     Console.WriteLine("Address cannot be null write a correct address");
                     Address = Console.ReadLine();
@@ -57,70 +65,88 @@ namespace StudentManagementSystem
                 {
                     Console.WriteLine("Invalid input. RollNo must be a positive integer. Please enter a correct RollNo : ");
                 }
-                Console.WriteLine("Enter Class : ");
-                while (!int.TryParse(Console.ReadLine(), out Standard) || Standard < 0 || Standard > 12)
+
+                int Standard;
+                while (true)
                 {
-                    Console.WriteLine("Enter a valid class : ");
+                    Console.WriteLine("Enter Class : ");
+                    while (!int.TryParse(Console.ReadLine(), out Standard) || Standard < 0 || Standard > 12)
+                    {
+                        Console.WriteLine("Enter a valid class : ");
+                    }
+
+                    if (IsRollNoUniqueForClass(RollNo, Standard))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Roll number {RollNo} already exists for class {Standard}. Please enter a different roll number.");
+                        while (!int.TryParse(Console.ReadLine(), out RollNo) || RollNo <= 0)
+                        {
+                            Console.WriteLine("Invalid input. RollNo must be a positive integer. Please enter a correct RollNo : ");
+                        }
+                    }
                 }
                 var marks = new Dictionary<Subject, int>();
-            foreach (Subject subject in Enum.GetValues(typeof(Subject)))
-            {
-                int marksValue;
-                while (true)
+                    foreach (Subject subject in Enum.GetValues(typeof(Subject)))
                     {
-                        Console.WriteLine($"Enter the marks in {subject} : ");
-                        if (int.TryParse(Console.ReadLine(), out marksValue))
+                        int marksValue;
+                        while (true)
                         {
-                            if (marksValue >= 0 && marksValue <= 100)
+                            Console.WriteLine($"Enter the marks in {subject} : ");
+                            if (int.TryParse(Console.ReadLine(), out marksValue))
                             {
-                                break;
+                                if (marksValue >= 0 && marksValue <= 100)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid input. Marks should be between 0 and 100.");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("Invalid input. Marks should be between 0 and 100.");
+                                Console.WriteLine("Invalid input. Please enter a valid integer value.");
                             }
                         }
-                        else
-                        {
-                            Console.WriteLine("Invalid input. Please enter a valid integer value.");
-                        }
+                        marks[subject] = marksValue;
                     }
-                    marks[subject] = marksValue;
-                }
 
-                Console.WriteLine("Enter Your hobbies(if want to skip then press enter)  : ");
-                    List<string> hobbies = new List<string>();
-                while (true)
-                {
+                    Console.WriteLine("Enter Your hobbies(if want to skip then press enter)  : ");
+                    HashSet<string> hobbies = new HashSet<string>();
+                    while (true)
+                    {
                         string? hobby = Console.ReadLine();
-                        if (hobbies.Contains(hobby))
+                        if (!string.IsNullOrEmpty(hobby) && hobbies.Contains(hobby) || !regexItem.IsMatch(hobby))
+                    {
+                            Console.WriteLine("Same hobby cannot be inserted write another hobby : ");
+                            hobby = Console.ReadLine();
+                        }
+                        if (string.IsNullOrEmpty(hobby) || string.IsNullOrWhiteSpace(hobby))
                         {
-                        Console.WriteLine("Same hobby cannot be inserted write another hobby : ");
-                        hobby = Console.ReadLine();
+                            break;
+                        }
+                        hobbies.Add(hobby);
                     }
-                    if (string.IsNullOrEmpty(hobby) || string.IsNullOrWhiteSpace(hobby))
-                {
-                        break;
-                    }
-                    hobbies.Add(hobby);
-                }
-                DateTime AddedDateTime = DateTime.Now;
-                var student = new Student()
-                {
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    MiddleName = MiddleName,
-                    Age = Age,
-                    Address = Address,
-                    Marks = marks,
-                    Hobby = hobbies,
-                    AddedDateTime = AddedDateTime,
-                    Standard = Standard,
-                    RollNo = RollNo,
-                };
-            studentmanagement.AddStudentInfo(student);
-            Console.WriteLine("Student Added Successfully!!");
-            Console.WriteLine();
+                    DateTime AddedDateTime = DateTime.Now;
+                    var student = new Student()
+                    {
+                        FirstName = FirstName,
+                        LastName = LastName,
+                        MiddleName = MiddleName,
+                        Age = Age,
+                        Address = Address,
+                        Marks = marks,
+                        Hobby = hobbies,
+                        AddedDateTime = AddedDateTime,
+                        Standard = Standard,
+                        RollNo = RollNo,
+                    };
+                    studentmanagement.AddStudentInfo(student);
+                    Console.WriteLine("Student Added Successfully!!");
+                    Console.WriteLine();  
             }
             catch (Exception ex)
             {
@@ -192,7 +218,12 @@ namespace StudentManagementSystem
         {
             Console.WriteLine("Enter the First name : ");
             string? name = Console.ReadLine();
-            List<Student> students = studentmanagement.GetStudentsByFirstName(name);
+
+            bool FilterByName(Student student, string firstName)
+            {
+                return string.IsNullOrEmpty(firstName) || student.FirstName.Contains(firstName, StringComparison.OrdinalIgnoreCase);
+            }
+            List<Student> students = studentmanagement.GetStudentsByFirstName(name, FilterByName);
             if (students.Count == 0)
             {
                 Console.WriteLine($"No student found with FirstName {name}");

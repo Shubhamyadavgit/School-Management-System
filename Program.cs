@@ -11,7 +11,7 @@ Console.WriteLine("-----------!Student Management System!-----------");
 //s2.AddedDateTime = DateTime.Parse("2022-04-03");
 //s3.AddedDateTime = DateTime.Parse("2023-01-03");
 //StudentManagement studentlog = new StudentManagement();
-UserInput ui = new UserInput();
+UserInput ui = new();
 //studentlog.AddStudent(s1);
 //studentlog.AddStudent(s2);
 //studentlog.AddStudent(s3);
@@ -30,7 +30,7 @@ while (true)
     Console.WriteLine("8. Exit Program");
     try
     {
-        int choice = int.Parse(Console.ReadLine());
+        int choice = Convert.ToInt32(Console.ReadLine());
 
         switch (choice)
         {
@@ -51,7 +51,7 @@ while (true)
                 Console.WriteLine("6. Filter the students by their Hobby.");
                 Console.WriteLine("7. Filter the students by their Added date.");
 
-                int option = int.Parse(Console.ReadLine());
+                int option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
                 {
                     case 1:

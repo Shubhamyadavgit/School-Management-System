@@ -32,7 +32,7 @@ namespace StudentManagementSystem
         }
 
         //4. Method to find the topper of the class
-        public Student GetClassTopperInfo(int standard)
+        public Student? GetClassTopperInfo(int standard)
         {
             List<Student> StudentInClass = students.FindAll(student => student.Standard == standard);
             if(StudentInClass.Count == 0)
@@ -56,7 +56,7 @@ namespace StudentManagementSystem
         }
 
         //5. Method to get the Nth topper of the class 
-        public Student GetNthTopperInfo(int standard,int Rank)
+        public Student? GetNthTopperInfo(int standard,int Rank)
         {
             List<Student> StudentInClass = students.FindAll(student => student.Standard == standard);
             if (StudentInClass.Count == 0)
@@ -76,18 +76,23 @@ namespace StudentManagementSystem
         }
 
         //Method to Filter Students
-        public List<Student> GetStudentsByFirstName(string firstname)
-        {
-            Predicate<Student> FilterStudent = student =>
-            {
+        public delegate bool StudentFilter(Student student, string firstName);
 
-                bool name = string.IsNullOrEmpty(firstname) || student.FirstName.Contains(firstname, StringComparison.OrdinalIgnoreCase);
-                return name;
-            };
-            return students.FindAll(FilterStudent);
-            // return students.FindAll(students => students.FirstName == firstname);
+        public List<Student> GetStudentsByFirstName(string firstname, StudentFilter filter)
+        {
+            List<Student> filteredStudents = new List<Student>();
+
+            foreach (var student in students)
+            {
+                if (filter(student, firstname))
+                {
+                    filteredStudents.Add(student);
+                }
+            }
+
+            return filteredStudents;
         }
-        
+
         public List<Student> GetStudentsByLastName(string lastName)
         {
             Predicate<Student> FilterStudent = student =>
@@ -135,7 +140,7 @@ namespace StudentManagementSystem
         {
             Predicate<Student> FilterDelegate = student =>
             {
-                bool FindHobby = string.IsNullOrEmpty(hobby) || Array.Exists(student.Hobby,hobbies => string.Equals(hobbies,hobby, StringComparison.OrdinalIgnoreCase));
+                bool FindHobby = string.IsNullOrEmpty(hobby) || student.Hobby.Contains(hobby);
                 return FindHobby;
             };
             return students.FindAll(FilterDelegate);
